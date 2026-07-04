@@ -1,0 +1,35 @@
+{
+  "name": "@kabegame/plugin-sdk",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Kabegame JavaScript crawler plugin SDK",
+  "license": "GPL-3.0-only",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "engines": {
+    "kabegame": ">=4.3.0"
+  },
+  "dependencies": {
+    "css-select": "^5.1.0",
+    "domhandler": "^5.0.3",
+    "domutils": "^3.2.2",
+    "htmlparser2": "^10.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
