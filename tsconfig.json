@@ -11,7 +11,8 @@
     "rootDir": "src",
     "strict": true,
     "skipLibCheck": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "types": ["@kabegame/types"]
   },
   "include": ["src/**/*.ts"]
 }

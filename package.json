@@ -11,6 +11,31 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./md5": {
+      "types": "./dist/md5.d.ts",
+      "import": "./dist/md5.js",
+      "default": "./dist/md5.js"
+    },
+    "./misc": {
+      "types": "./dist/misc.d.ts",
+      "import": "./dist/misc.js",
+      "default": "./dist/misc.js"
+    },
+    "./regex": {
+      "types": "./dist/regex.d.ts",
+      "import": "./dist/regex.js",
+      "default": "./dist/regex.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js",
+      "default": "./dist/types.js"
+    },
+    "./url": {
+      "types": "./dist/url.d.ts",
+      "import": "./dist/url.js",
+      "default": "./dist/url.js"
     }
   },
   "files": [
@@ -24,10 +49,7 @@
     "kabegame": ">=4.3.0"
   },
   "dependencies": {
-    "css-select": "^5.1.0",
-    "domhandler": "^5.0.3",
-    "domutils": "^3.2.2",
-    "htmlparser2": "^10.0.0"
+    "@kabegame/types": "file:../kabegame-types"
   },
   "devDependencies": {
     "typescript": "^5.4.5"

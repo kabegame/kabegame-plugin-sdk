@@ -12,13 +12,49 @@ const TABLE = Array.from({ length: 64 }, (_, i) =>
 const leftRotate = (value: number, bits: number) =>
   ((value << bits) | (value >>> (32 - bits))) >>> 0;
 
-const toUtf8Bytes = (value: string) => new TextEncoder().encode(value);
+const toUtf8Bytes = (value: string) => {
+  const bytes: number[] = [];
+  for (const char of value) {
+    const codePoint = char.codePointAt(0) ?? 0;
+    if (codePoint <= 0x7f) {
+      bytes.push(codePoint);
+    } else if (codePoint <= 0x7ff) {
+      bytes.push(0xc0 | (codePoint >> 6), 0x80 | (codePoint & 0x3f));
+    } else if (codePoint <= 0xffff) {
+      bytes.push(
+        0xe0 | (codePoint >> 12),
+        0x80 | ((codePoint >> 6) & 0x3f),
+        0x80 | (codePoint & 0x3f),
+      );
+    } else {
+      bytes.push(
+        0xf0 | (codePoint >> 18),
+        0x80 | ((codePoint >> 12) & 0x3f),
+        0x80 | ((codePoint >> 6) & 0x3f),
+        0x80 | (codePoint & 0x3f),
+      );
+    }
+  }
+  return new Uint8Array(bytes);
+};
 
 const toHexLe = (value: number) =>
   [value, value >>> 8, value >>> 16, value >>> 24]
     .map((byte) => (byte & 0xff).toString(16).padStart(2, "0"))
     .join("");
 
+/**
+ * Calculate the lowercase MD5 hex digest of a string.
+ *
+ * This implementation is dependency-free and UTF-8 encodes the input before
+ * hashing. Use it when a site requires legacy MD5 request signatures.
+ *
+ * @example
+ * ```ts
+ * const sign = md5(`${path}:${secret}`);
+ * const response = await fetch(`${apiUrl}?sign=${sign}`);
+ * ```
+ */
 export const md5 = (value: string) => {
   const input = toUtf8Bytes(value);
   const bitLength = input.length * 8;
