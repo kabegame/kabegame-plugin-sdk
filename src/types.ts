@@ -222,7 +222,6 @@ export type kbCrawlFn<CustomCfg = Record<string, JsonValue>> = (
  *   name: "artist / character",
  *   url: postUrl,
  *   metadata: { schema: 1, title: "Post title" },
- *   metadata_version: 1,
  * });
  * ```
  */
@@ -233,28 +232,27 @@ export interface KbDownloadImageOptions {
   metadata_id?: number | null;
   /** Source/post URL associated with the downloaded file. */
   url?: string | null;
-  /** JSON metadata to store with the image. Ignored when `metadata_id` is set. */
+  /**
+   * JSON metadata to store with the image. Ignored when `metadata_id` is set.
+   * The stored row is stamped with the running plugin's version by the app;
+   * keep a `schema` marker inside the metadata itself for your migration script.
+   */
   metadata?: JsonValue;
-  /** Version number for `metadata`, used by plugin metadata migrations. */
-  metadata_version?: number | null;
 }
 
 /**
  * Options for `Kabegame.createImageMetadata`.
  *
+ * The stored row is stamped with the running plugin's version by the app;
+ * keep a `schema` marker inside the metadata itself for your migration script.
+ *
  * @example
  * ```ts
- * const metadataId = Kabegame.createImageMetadata(
- *   { schema: 1, title: "Post title" },
- *   { version: 1 },
- * );
+ * const metadataId = Kabegame.createImageMetadata({ schema: 1, title: "Post title" });
  * await Kabegame.downloadImage(imageUrl, { metadata_id: Number(metadataId) });
  * ```
  */
-export interface KbCreateImageMetadataOptions {
-  /** Plugin metadata schema version. */
-  version?: number | null;
-}
+export interface KbCreateImageMetadataOptions {}
 
 /**
  * Lightweight text match result used by SDK helpers that extract text from HTML.
