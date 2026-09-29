@@ -18,4 +18,10 @@ export const crawl = (async (common: KbCommonCfg, custom: MyCfg) => {
   const tag = custom.tag ?? "";
   await Kabegame.to(`${common.base_url ?? ""}/post?page=${page}&tags=${tag}`);
   await Kabegame.downloadImage(resolveUrl("/sample.jpg", common.base_url ?? "https://example.test"));
+  await Kabegame.downloadImage(resolveUrl("/labeled.jpg", common.base_url ?? "https://example.test"), {
+    labels: [
+      { key: "hatsune", category: "character", name: "Hatsune Miku" },
+      { key: "vocaloid" },
+    ],
+  });
 }) satisfies kbCrawlFn<MyCfg>;
