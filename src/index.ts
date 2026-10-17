@@ -17,6 +17,7 @@
  * ```
  */
 export * from "./md5.js";
+export * from "./i18n.js";
 export * from "./misc.js";
 export * from "./regex.js";
 export * from "./types.js";

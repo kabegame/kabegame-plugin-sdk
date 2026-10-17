@@ -17,6 +17,11 @@
       "import": "./dist/md5.js",
       "default": "./dist/md5.js"
     },
+    "./i18n": {
+      "types": "./dist/i18n.d.ts",
+      "import": "./dist/i18n.js",
+      "default": "./dist/i18n.js"
+    },
     "./misc": {
       "types": "./dist/misc.d.ts",
       "import": "./dist/misc.js",

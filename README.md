@@ -28,6 +28,27 @@ export const crawl = (async (common: KbCommonCfg, custom: MyCfg) => {
 
 The package is intended to be bundled into the final `crawl.v8.js` file by the plugin author's bundler. Kabegame runtime provides Web platform globals plus the `Kabegame.*` host API.
 
+## i18n
+
+Keep each language's flat message table in `src/i18n/<lang>.json`, then register the tables with
+`defineI18n`. The base language table defines the valid keys and is also the fallback for missing
+translations. On older Kabegame versions without `getLang`, the base language is used.
+
+```ts
+import { defineI18n } from "@kabegame/plugin-sdk";
+import en from "./i18n/en.json";
+import ja from "./i18n/ja.json";
+import ko from "./i18n/ko.json";
+import zh from "./i18n/zh.json";
+import zhtw from "./i18n/zhtw.json";
+
+const t = defineI18n("zh", { zh, en, ja, ko, zhtw });
+console.log(t("openPage", { page: 1, total: 5, url: "https://example.test" }));
+```
+
+Enable `resolveJsonModule` in the plugin's `tsconfig.json`; the bundler will inline the JSON tables
+into the final plugin script.
+
 ## DOM parsing and metadata
 
 ```ts
