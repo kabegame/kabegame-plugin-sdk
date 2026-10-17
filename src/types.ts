@@ -59,6 +59,7 @@ export interface KbCommonCfg {
 
 declare const kbCfgKey: unique symbol;
 declare const kbCfgValue: unique symbol;
+declare const kbCfgModifier: unique symbol;
 
 /**
  * Integer custom config field value.
@@ -105,10 +106,10 @@ export type kbCfgBoolean = boolean;
  *
  * @example
  * ```ts
- * type SaveOriginal = kbCfgField<"saveOriginal", kbCfgCheckbox>;
+ * type MediaKinds = kbCfgField<"mediaKinds", kbCfgCheckbox<"image" | "video">>;
  * ```
  */
-export type kbCfgCheckbox = boolean;
+export type kbCfgCheckbox<V extends string = string> = Record<V, boolean>;
 
 /**
  * Date custom config value encoded as a string.
@@ -150,14 +151,29 @@ export type kbCfgOption<T extends string | number | boolean = string> = T;
  * type StartPageField = kbCfgField<"startPage", kbCfgInt>;
  * ```
  */
-export type kbCfgField<K extends string, T> = {
+/** Type-level modifiers mirroring `kbConfig.required` and `kbConfig.when`. */
+export type kbCfgFieldMod = { required?: true; when?: true };
+
+export type kbCfgField<K extends string, T, M extends kbCfgFieldMod = {}> = {
   readonly [kbCfgKey]: K;
   readonly [kbCfgValue]: T;
+  readonly [kbCfgModifier]: M;
 };
 
 type FieldEntry<F, PreserveNull extends boolean> =
-  F extends kbCfgField<infer K, infer T>
-    ? { [P in K]: PreserveNull extends true ? T | null : T }
+  F extends kbCfgField<infer K, infer T, infer M>
+    ? M extends { required: true }
+      ? M extends { when: true }
+        ? { [P in K]?: T }
+        : { [P in K]: T }
+      : // 用元组包裹避免分配：否则 boolean 会拆成 true | false，交叉后坍缩为 never
+        [T] extends [boolean]
+        ? M extends { when: true }
+          ? { [P in K]?: T }
+          : { [P in K]: T }
+        : M extends { when: true }
+          ? { [P in K]?: PreserveNull extends true ? T | null : T }
+          : { [P in K]: PreserveNull extends true ? T | null : T }
     : unknown;
 
 type UnionToIntersection<U> = (

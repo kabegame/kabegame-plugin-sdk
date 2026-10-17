@@ -1,6 +1,6 @@
 # @kabegame/plugin-sdk
 
-TypeScript SDK for Kabegame JavaScript crawler plugins.
+TypeScript SDK for [Kabegame](https://github.com/kabegame/kabegame) JavaScript crawler plugins.
 
 ## Typed crawler entry
 
@@ -115,3 +115,13 @@ const signature = md5(`${absolute}:secret`);
 
 console.log({ absolute, signature });
 ```
+
+## Links
+
+- Kabegame: https://github.com/kabegame/kabegame
+- Runtime types: [@kabegame/types](https://www.npmjs.com/package/@kabegame/types)
+- Official plugins: https://github.com/kabegame/crawler-plugins
+
+## License
+
+MIT
