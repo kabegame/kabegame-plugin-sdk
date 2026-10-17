@@ -100,3 +100,7 @@ console.log({ absolute, signature });
 - Kabegame: https://github.com/kabegame/kabegame
 - Runtime types: [@kabegame/types](https://www.npmjs.com/package/@kabegame/types)
 - Official plugins: https://github.com/kabegame/crawler-plugins
+
+## License
+
+MIT

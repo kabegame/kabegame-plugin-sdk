@@ -1,16 +1,21 @@
 {
   "name": "@kabegame/plugin-sdk",
-  "version": "4.5.1",
+  "version": "4.5.2",
   "type": "module",
   "description": "Kabegame JavaScript crawler plugin SDK",
-  "license": "GPL-3.0-only",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kabegame/kabegame-plugin-sdk.git"
   },
   "homepage": "https://github.com/kabegame/kabegame-plugin-sdk#readme",
   "bugs": "https://github.com/kabegame/kabegame-plugin-sdk/issues",
-  "keywords": ["kabegame", "crawler", "plugin", "sdk"],
+  "keywords": [
+    "kabegame",
+    "crawler",
+    "plugin",
+    "sdk"
+  ],
   "publishConfig": {
     "access": "public"
   },
