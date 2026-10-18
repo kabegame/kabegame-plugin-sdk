@@ -27,9 +27,9 @@ type MyCfg = kbCustomCfg<[
 export const crawl = (async (common: KbCommonCfg, custom: MyCfg) => {
   const page = custom.start_page ?? 1;
   const tag = custom.tag ?? "";
-  await Kabegame.to(`${common.base_url ?? ""}/post?page=${page}&tags=${tag}`);
-  await Kabegame.downloadImage(resolveUrl("/sample.jpg", common.base_url ?? "https://example.test"));
-  await Kabegame.downloadImage(resolveUrl("/labeled.jpg", common.base_url ?? "https://example.test"), {
+  await Kabegame.to(`${common.baseUrl ?? ""}/post?page=${page}&tags=${tag}`);
+  await Kabegame.downloadImage(resolveUrl("/sample.jpg", common.baseUrl ?? "https://example.test"));
+  await Kabegame.downloadImage(resolveUrl("/labeled.jpg", common.baseUrl ?? "https://example.test"), {
     labels: [
       { key: "hatsune", category: "character", name: "Hatsune Miku" },
       { key: "vocaloid" },
