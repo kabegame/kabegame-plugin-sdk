@@ -21,8 +21,8 @@ type MyCfg = kbCustomCfg<[
 ]>;
 
 export const crawl = (async (common: KbCommonCfg, custom: MyCfg) => {
-  await Kabegame.to(`${common.base_url}/post?page=${custom.start_page ?? 1}`);
-  await Kabegame.downloadImage(resolveUrl("/sample.jpg", common.base_url));
+  await Kabegame.to(`${common.baseUrl}/post?page=${custom.start_page ?? 1}`);
+  await Kabegame.downloadImage(resolveUrl("/sample.jpg", common.baseUrl));
 }) satisfies kbCrawlFn<MyCfg>;
 ```
 
@@ -55,7 +55,7 @@ into the final plugin script.
 import { sleep, type kbCrawlFn } from "@kabegame/plugin-sdk";
 
 export const crawl = (async (common) => {
-  const baseUrl = common.base_url ?? "https://example.test";
+  const baseUrl = common.baseUrl ?? "https://example.test";
   await Kabegame.to(`${baseUrl}/posts`);
 
   const list = await Kabegame.currentDocument();

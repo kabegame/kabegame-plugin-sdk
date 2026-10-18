@@ -44,17 +44,17 @@ export interface JsonObject {
 /**
  * Host-provided common crawler config.
  *
- * `base_url` comes from the plugin package metadata. It may be `null` when the
+ * `baseUrl` comes from the plugin package metadata. It may be `null` when the
  * package does not define a base URL, so plugins should keep a fallback.
  *
  * @example
  * ```ts
- * const baseUrl = common.base_url ?? "https://example.test";
+ * const baseUrl = common.baseUrl ?? "https://example.test";
  * await Kabegame.to(`${baseUrl}/posts`);
  * ```
  */
 export interface KbCommonCfg {
-  base_url: string | null;
+  baseUrl: string | null;
 }
 
 declare const kbCfgKey: unique symbol;
@@ -218,7 +218,7 @@ export type kbCustomCfg<
  * type CustomCfg = kbCustomCfg<[kbCfgField<"tag", kbCfgStr>]>;
  *
  * export const crawl = (async (common, custom) => {
- *   const url = new URL("/posts", common.base_url ?? "https://example.test");
+ *   const url = new URL("/posts", common.baseUrl ?? "https://example.test");
  *   if (custom.tag) url.searchParams.set("tag", custom.tag);
  *   await Kabegame.to(url.href);
  * }) satisfies kbCrawlFn<CustomCfg>;
