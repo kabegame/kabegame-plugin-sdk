@@ -1,6 +1,6 @@
 {
   "name": "@kabegame/plugin-sdk",
-  "version": "4.6.0",
+  "version": "4.6.1",
   "type": "module",
   "description": "Kabegame JavaScript crawler plugin SDK",
   "license": "MIT",

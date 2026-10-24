@@ -55,6 +55,8 @@ export interface JsonObject {
  */
 export interface KbCommonCfg {
   baseUrl: string | null;
+  /** Whether this task runs plugin logic without downloading or writing library data. */
+  isDryRun: boolean;
 }
 
 declare const kbCfgKey: unique symbol;
