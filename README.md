@@ -116,6 +116,45 @@ const signature = md5(`${absolute}:secret`);
 console.log({ absolute, signature });
 ```
 
+## Wallpaper Engine wallpapers
+
+A Wallpaper Engine wallpaper is a folder (`project.json` plus its video, web page or scene files)
+that Kabegame stores as a single item. `downloadWpeWallpaper` downloads the folder file by file into
+the task VFS and hands it over with `Kabegame.downloadImage(dir, { relocate: true })`: the host
+moves the folder into the output directory, or deletes it when the same wallpaper is already in the
+library. Requires Kabegame 4.7.0 or later (desktop); works in both the V8 and WebView backends.
+
+```ts
+import { downloadWpeWallpaper, type kbCrawlFn } from "@kabegame/plugin-sdk";
+
+export const crawl = (async (common) => {
+  // `rootUrl` is the directory; each file is fetched from `${rootUrl}/${path}`.
+  const rootUrl = "https://example.test/wallpapers/1234";
+  const listing = (await (await fetch(rootUrl)).json()) as {
+    files: { path: string; size?: number }[];
+  };
+
+  await downloadWpeWallpaper({
+    rootUrl,
+    files: listing.files, // must contain project.json
+    name: "My wallpaper", // display name, also the folder name
+    dryRun: common.isDryRun,
+    downloadOptions: { url: "https://example.test/post/1234" },
+    onFileDone: (file, index, total) => console.log(`${index + 1}/${total} ${file.path}`),
+  });
+}) satisfies kbCrawlFn;
+```
+
+- File paths are relative to the wallpaper folder and `/`-separated; paths with `..`, a leading `/`,
+  a backslash or a drive letter are rejected.
+- A file counts as downloaded when the response status is 200 and, if `size` is given, the size
+  matches. Each file is retried `retries` times (default 2).
+- Files are downloaded to `workDir` (default `${Kabegame.fs.getRoot()}/tmp/wpe`). Nothing is left
+  there on success; if a step throws, the partial folder is removed, and leftovers older than 12
+  hours are cleaned up on the next call.
+- Metadata cannot be set: Kabegame stores the wallpaper's `project.json` as its metadata. Only the
+  post URL and labels can be passed through `downloadOptions`.
+
 ## Links
 
 - Kabegame: https://github.com/kabegame/kabegame

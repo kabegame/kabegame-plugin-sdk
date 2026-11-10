@@ -8,6 +8,7 @@ import {
   type kbCrawlFn,
   type kbCustomCfg,
   defineI18n,
+  downloadWpeWallpaper,
   resolveUrl,
 } from "../src/index";
 import enMessages from "./messages.en.json";
@@ -58,3 +59,21 @@ validModifierCfg.required_text = null;
 validModifierCfg.enabled = null;
 // @ts-expect-error checkbox 必须包含声明过的全部 variable
 validModifierCfg.checks = { images: true };
+
+export const crawlWallpaper = (async (common: KbCommonCfg) => {
+  await downloadWpeWallpaper({
+    rootUrl: "https://example.test/file/wallpaper",
+    files: [{ path: "project.json", size: 12 }, { path: "materials/a.tex" }],
+    name: "wallpaper",
+    dryRun: common.isDryRun,
+    downloadOptions: { url: "https://example.test/post", labels: [{ key: "scene" }] },
+    onFileDone: (file, index, total) => console.log(`${index + 1}/${total} ${file.path}`),
+  });
+  await Kabegame.downloadImage(`${Kabegame.fs.getRoot()}/tmp/a.png`, { relocate: true });
+  await downloadWpeWallpaper({
+    rootUrl: "https://example.test/file/wallpaper",
+    files: [],
+    // @ts-expect-error metadata 由宿主取 project.json，不能经 downloadOptions 传入。
+    downloadOptions: { metadata: { schema: 1 } },
+  });
+}) satisfies kbCrawlFn;
